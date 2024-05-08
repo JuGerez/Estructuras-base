@@ -10,6 +10,9 @@ int cargaAlumnos (stAlumno a[], int v, int dim);
 void muestraAlumnos (stAlumno a[], int v);
 stAlumno buscaMenorLegajo (stAlumno a[], int v);
 stAlumno buscaMenorApellido (stAlumno a[], int v);
+stAlumno buscaPorLegajo (stAlumno a[], int v, int legajo);
+int ingresarLegajo();
+void ordenarPorSeleccion (stAlumno a[], int v, int dim);
 
 int main()
 {
@@ -17,6 +20,7 @@ int main()
     int vAlumnos = 0;
     stAlumno alumnoMenorApellido;
     stAlumno alumnoMenorLegajo;
+    stAlumno alumnoABuscar;
 
     vAlumnos = cargaAlumnos (alumnos, vAlumnos, DIM);
 
@@ -34,6 +38,27 @@ int main()
             printf("\nEl alumno con menor legajo: \n");
             muestraUnAlumno(alumnoMenorLegajo);
     }
+
+    getch();
+    system("cls");
+    int legajo = ingresarLegajo();
+
+    alumnoABuscar = buscaPorLegajo(alumnos, vAlumnos, legajo);
+    if (alumnoABuscar.legajo > -1){
+            printf("\nEl alumno que corresponde al legajo %d es: \n", legajo);
+            muestraUnAlumno(alumnoABuscar);
+    }
+
+    getch();
+    system("cls");
+
+    stAlumno alumnosOrdenados [DIM];
+    int vAlumnosOrdenados = 0;
+
+    ordenarPorSeleccion(alumnosOrdenados, vAlumnosOrdenados, DIM);
+    printf("\n Datos ordenados por legajo: \n");
+    muestraAlumnos(alumnosOrdenados, vAlumnosOrdenados);
+
 
     return 0;
 }
@@ -95,3 +120,37 @@ stAlumno buscaMenorApellido (stAlumno a[], int v)
 
     return alumnoMenor;
 }
+stAlumno buscaPorLegajo (stAlumno a[], int v, int legajo)
+{
+    stAlumno alumnoABuscar;
+    alumnoABuscar.legajo = -1;
+    int i = 0;
+
+    while (i < v){
+            if(a[i].legajo = legajo){
+            alumnoABuscar = a[i];
+            }
+            i++;
+        }
+
+    return alumnoABuscar;
+}
+int ingresarLegajo ()
+{
+    int legajo = 0;
+    printf("Ingrese el numero de legajo a buscar: \n");
+    scanf("%d", &legajo);
+    system("cls");
+
+    return legajo;
+}
+//4.Hacer una función que ordene el arreglo de alumnos por medio del método de selección.
+//El criterio de ordenación es el número de matrícula.
+void ordenarPorSeleccion (stAlumno a[], int v, int dim)
+{
+    while(v < dim){
+        a[v] = buscaMenorLegajo(a, v);
+        v++;
+    }
+}
+
